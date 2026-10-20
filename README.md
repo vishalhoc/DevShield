@@ -137,6 +137,32 @@ Quit DevShield
 
 Edit `config.json` to customize which folders and processes are excluded from Defender scanning:
 
+The default `config.json` includes **200+ entries** covering virtually every developer tool:
+
+| Category | Folders | Processes |
+|----------|---------|-----------|
+| **Android Studio / Emulator** | SDK, AVD, Gradle, project dirs | `studio64.exe`, `adb.exe`, `emulator.exe`, `qemu-system-*` |
+| **Java / Kotlin / JVM** | `.gradle`, `.m2`, `.jdks`, JDK installs | `java.exe`, `javac.exe`, `gradle.exe`, `mvn.cmd`, `kotlin.bat` |
+| **Node.js / JavaScript** | npm-cache, Yarn, pnpm, Deno, Bun | `node.exe`, `npm.cmd`, `yarn.exe`, `pnpm.exe`, `esbuild.exe`, `tsc.cmd` |
+| **Python** | virtualenvs, pip, conda, Poetry, pyenv | `python.exe`, `pip.exe`, `conda.exe`, `pytest.exe`, `jupyter.exe` |
+| **.NET / C#** | NuGet, .dotnet | `dotnet.exe`, `MSBuild.exe`, `csc.exe`, `nuget.exe` |
+| **Visual Studio** | VS install dirs, local data | `devenv.exe`, `cl.exe`, `link.exe`, `ServiceHub.*.exe` |
+| **VS Code** | Extensions, settings | `Code.exe`, `Code - Insiders.exe` |
+| **JetBrains IDEs** | IntelliJ, PyCharm, WebStorm, etc. | `idea64.exe`, `pycharm64.exe`, `webstorm64.exe`, all IDEs |
+| **Rust** | `.cargo`, `.rustup` | `rustc.exe`, `cargo.exe`, `rust-analyzer.exe` |
+| **Go** | GOPATH, go modules | `go.exe`, `gopls.exe`, `dlv.exe` |
+| **Flutter / Dart** | Flutter SDK, pub cache | `flutter.bat`, `dart.exe` |
+| **C / C++** | MinGW, MSYS2, Conan, vcpkg | `cmake.exe`, `gcc.exe`, `clang.exe`, `ninja.exe`, `make.exe` |
+| **Docker** | Docker Desktop, images | `docker.exe`, `dockerd.exe`, `kubectl.exe`, `helm.exe` |
+| **Ruby / PHP** | Gems, Composer, XAMPP, Laragon | `ruby.exe`, `php.exe`, `composer.bat` |
+| **Game Engines** | Unity, Unreal, Godot | `Unity.exe`, `UnrealEditor.exe`, `ShaderCompileWorker.exe` |
+| **Databases** | MongoDB, PostgreSQL, MySQL, Redis | `mongod.exe`, `postgres.exe`, `redis-server.exe` |
+| **Cloud CLIs** | AWS, Azure, GCP, Terraform, K8s | `gcloud.cmd`, `aws.exe`, `az.cmd`, `terraform.exe` |
+| **Misc Tools** | Git, terminals, WSL, editors | `git.exe`, `wsl.exe`, `curl.exe`, `postman.exe` |
+
+<details>
+<summary>📋 Example config.json (click to expand)</summary>
+
 ```json
 {
     "exclusion_folders": [
@@ -144,28 +170,31 @@ Edit `config.json` to customize which folders and processes are excluded from De
         "%USERPROFILE%\\.gradle",
         "%USERPROFILE%\\.android",
         "%LOCALAPPDATA%\\Android\\Sdk",
-        "%USERPROFILE%\\.nuget",
+        "%USERPROFILE%\\AndroidStudioProjects",
+        "%USERPROFILE%\\.m2",
         "%LOCALAPPDATA%\\npm-cache",
-        "%APPDATA%\\npm",
+        "%USERPROFILE%\\.cargo",
+        "%USERPROFILE%\\.nuget",
+        "%LOCALAPPDATA%\\Docker",
+        "%LOCALAPPDATA%\\JetBrains",
         "%TEMP%"
     ],
     "exclusion_processes": [
-        "java.exe",
-        "javaw.exe",
-        "gradle.exe",
-        "node.exe",
-        "adb.exe",
-        "emulator.exe",
-        "qemu-system-x86_64.exe",
-        "devenv.exe",
-        "msbuild.exe",
-        "python.exe",
-        "Code.exe"
+        "studio64.exe",
+        "java.exe", "gradle.exe",
+        "adb.exe", "emulator.exe", "qemu-system-x86_64.exe",
+        "node.exe", "python.exe",
+        "devenv.exe", "MSBuild.exe", "Code.exe",
+        "docker.exe", "git.exe",
+        "rustc.exe", "cargo.exe",
+        "go.exe", "dotnet.exe"
     ]
 }
 ```
 
-> **Tip:** Environment variables like `%USERPROFILE%` and `%LOCALAPPDATA%` are expanded automatically.
+</details>
+
+> **Tip:** The full default config covers 200+ entries across all categories. Edit `config.json` to add/remove as needed. Environment variables like `%USERPROFILE%` are expanded automatically. Lines starting with `__COMMENT` are used for organization and are ignored.
 
 ---
 

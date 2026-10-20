@@ -87,10 +87,18 @@ def expand_path(path_str):
 
 
 def load_config():
-    """Load exclusion configuration from config.json."""
+    """Load exclusion configuration from config.json.
+    Filters out comment entries (keys/values starting with '__COMMENT')."""
     try:
         with open(CONFIG_FILE, "r") as f:
-            return json.load(f)
+            raw = json.load(f)
+        # Filter out comment strings used for organization in the JSON
+        def filter_comments(lst):
+            return [item for item in lst if isinstance(item, str) and not item.startswith("__COMMENT")]
+        return {
+            "exclusion_folders": filter_comments(raw.get("exclusion_folders", [])),
+            "exclusion_processes": filter_comments(raw.get("exclusion_processes", []))
+        }
     except (FileNotFoundError, json.JSONDecodeError):
         return {"exclusion_folders": [], "exclusion_processes": []}
 
