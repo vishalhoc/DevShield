@@ -1,0 +1,98 @@
+{
+    "Extreme Game Mode": {
+        "description": "Maximum FPS, ultra-low input latency. Stops Search, SysMain, Spooler, Updates, Telemetry, sets High/Ultimate power plan, optimizes network throttling.",
+        "services": [
+            "WSearch",
+            "SysMain",
+            "Spooler",
+            "DiagTrack",
+            "dmwappushservice",
+            "WerSvc",
+            "DoSvc",
+            "wuauserv",
+            "BITS",
+            "RemoteRegistry",
+            "MapsBroker",
+            "lfsvc",
+            "TabletInputService",
+            "TrkWks",
+            "Fax",
+            "wisvc",
+            "RetailDemo"
+        ],
+        "tweaks": {
+            "power_plan": true,
+            "clean_ram": true,
+            "game_mode": true,
+            "network_throttling": true,
+            "system_responsiveness": true,
+            "flush_dns": true
+        },
+        "kill_background_apps": [
+            "OneDrive.exe",
+            "Spotify.exe",
+            "PhoneExperienceHost.exe",
+            "Cortana.exe",
+            "Skype.exe",
+            "Dropbox.exe"
+        ]
+    },
+    "Heavy Dev Mode": {
+        "description": "Maximum compile speed, instant I/O response for Gradle, Docker, Android Studio, IDEs. Stops indexing, SysMain, Updates, purges RAM cache.",
+        "services": [
+            "WSearch",
+            "SysMain",
+            "Spooler",
+            "DiagTrack",
+            "dmwappushservice",
+            "WerSvc",
+            "DoSvc",
+            "wuauserv",
+            "BITS",
+            "RemoteRegistry",
+            "MapsBroker",
+            "lfsvc",
+            "TabletInputService",
+            "TrkWks",
+            "Fax"
+        ],
+        "tweaks": {
+            "power_plan": true,
+            "clean_ram": true,
+            "game_mode": false,
+            "network_throttling": true,
+            "system_responsiveness": true,
+            "flush_dns": true
+        },
+        "kill_background_apps": [
+            "OneDrive.exe",
+            "Spotify.exe",
+            "PhoneExperienceHost.exe",
+            "Cortana.exe",
+            "Skype.exe"
+        ]
+    },
+    "Balanced Boost": {
+        "description": "Safe daily boost. Stops telemetry, diagnostic tracking, and cleans RAM. Keeps Bluetooth, printing, and Windows Update available.",
+        "services": [
+            "DiagTrack",
+            "dmwappushservice",
+            "WerSvc",
+            "RemoteRegistry",
+            "MapsBroker",
+            "lfsvc",
+            "TabletInputService",
+            "Fax",
+            "RetailDemo"
+        ],
+        "tweaks": {
+            "power_plan": true,
+            "clean_ram": true,
+            "game_mode": true,
+            "network_throttling": false,
+            "system_responsiveness": false,
+            "flush_dns": false
+        },
+        "kill_background_apps": []
+    }
+}

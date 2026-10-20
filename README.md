@@ -2,12 +2,12 @@
   <img src="screenshots/banner.png" alt="DevShield Banner" width="100%">
 </p>
 
-<h1 align="center">DevShield 🛡️</h1>
+<h1 align="center">DevShield 🛡️ & TurboBoost ⚡</h1>
 
 <p align="center">
-  <strong>A developer-friendly Windows Defender manager that lives in your system tray.</strong>
+  <strong>The Ultimate Windows Optimization Suite for Developers and Gamers.</strong>
   <br>
-  One-click toggle to speed up builds, Android emulators, and dev workflows.
+  One-click Windows Defender management + 1-click Game & Dev Mode system optimizer.
 </p>
 
 <p align="center">
@@ -16,6 +16,37 @@
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
   <img src="https://img.shields.io/badge/status-active-brightgreen" alt="Status">
 </p>
+
+---
+
+## 🧰 The Suite
+
+This repository provides two powerful tools:
+
+| Tool | Focus | Launch Command |
+|---|---|---|
+| **🛡️ DevShield** | Windows Defender exclusions, real-time protection toggles, and cloud submission management from system tray | `python devshield.py` or `run_devshield.bat` |
+| **⚡ TurboBoost** | 1-Click Game & Dev Mode optimizer: stops 22+ background services, cleans RAM, optimizes network latency, sets Ultimate power plan with smart state snapshots | `python turboboost.py` or `run_turboboost.bat` |
+
+---
+
+## ⚡ TurboBoost — Game & Dev Mode Optimizer
+
+TurboBoost is a dedicated, modern GUI optimizer designed to give games and heavy developer workflows (Android Studio, Docker, Gradle, compilation) 100% of your system resources:
+
+- 🚀 **1-Click Boost & 1-Click Restore**: Uses a smart snapshot engine that records which services were actually running before boost, ensuring a 100% clean recovery back to Normal Mode.
+- 🎛️ **Pre-built & Custom Profiles**:
+  - `Extreme Game Mode` — Maximum FPS, zero-latency network priority, closes background resource hogs.
+  - `Heavy Dev Mode` — Stops search indexing, SysMain, Windows Update, purges RAM working sets.
+  - `Balanced Boost` — Safe daily optimization.
+  - `Custom Profiles` — Save your own configuration and toggle it in 1 click!
+- ⚙️ **22+ Windows Services Managed**: Granular controls for `WSearch`, `SysMain`, `Spooler`, `DiagTrack`, `WerSvc`, `DoSvc`, Xbox services, and more.
+- 🏎️ **System & Network Tweaks**: High/Ultimate Performance power plan, network throttling index unthrottling (`0xffffffff`), system responsiveness priority (`0`), DNS flush.
+- 🧠 **RAM Working Set Cleaner**: Purges standby memory cache and working sets on demand.
+- 🛑 **Background App Terminator**: Closes OneDrive, Discord, Spotify, Teams, and game launchers during boost.
+- 📊 **Real-time CPU/RAM Dashboard & System Tray**: Live performance gauges and background tray minimization.
+
+*Full TurboBoost documentation:* [README_TURBOBOOST.md](README_TURBOBOOST.md)
 
 ---
 
@@ -240,18 +271,22 @@ All commands are written to a `.ps1` script file before execution to avoid shell
 ## 📁 Project Structure
 
 ```
-DevShield/
-├── devshield.py          # Main application
-├── config.json           # Exclusion configuration
-├── run_devshield.bat     # Quick launcher (no console)
-├── requirements.txt      # Python dependencies
-├── LICENSE               # MIT License
-├── README.md             # This file
-└── screenshots/          # Repository screenshots
-    ├── banner.png
-    ├── tray-menu.png
-    ├── dev-mode.png
-    └── status-dialog.png
+DevShield & TurboBoost/
+├── devshield.py            # Windows Defender tray manager
+├── config.json             # 200+ developer exclusion paths & processes
+├── run_devshield.bat       # DevShield launcher
+│
+├── turboboost.py           # TurboBoost main entry point
+├── turboboost_engine.py    # Snapshot engine, service control, RAM trimmer, tweaks
+├── turboboost_gui.py       # CustomTkinter modern dark dashboard GUI
+├── profiles.json           # Game Mode & Dev Mode saved profiles
+├── run_turboboost.bat      # TurboBoost 1-click launcher
+│
+├── requirements.txt        # Python dependencies
+├── LICENSE                 # MIT License
+├── README.md               # Main suite documentation
+├── README_TURBOBOOST.md    # Dedicated TurboBoost documentation
+└── screenshots/            # Repository screenshots
 ```
 
 ---

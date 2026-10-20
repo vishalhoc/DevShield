@@ -18,9 +18,11 @@ env/
 *.swp
 *.swo
 
-# DevShield runtime files
+# DevShield & TurboBoost runtime files
 _scripts/
 devshield_silent.vbs
+snapshot.json
+turboboost_silent.vbs
 
 # OS
 Thumbs.db
