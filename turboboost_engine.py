@@ -277,8 +277,19 @@ def run_as_admin():
     """Relaunch the current script with administrator elevation."""
     script = os.path.abspath(sys.argv[0])
     params = " ".join([f'"{arg}"' for arg in sys.argv[1:]])
-    ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, f'"{script}" {params}', None, 1)
-    sys.exit(0)
+    try:
+        ret = ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, f'"{script}" {params}', None, 1)
+        if ret > 32:
+            sys.exit(0)
+    except Exception:
+        pass
+    # Fallback via PowerShell
+    try:
+        ps_cmd = f'Start-Process python -ArgumentList \'"{script}" {params}\' -Verb RunAs'
+        subprocess.Popen(["powershell", "-NoProfile", "-Command", ps_cmd])
+        sys.exit(0)
+    except Exception:
+        pass
 
 
 def run_command(cmd: str) -> tuple[str, str, int]:

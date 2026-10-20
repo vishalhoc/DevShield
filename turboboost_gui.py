@@ -45,9 +45,13 @@ class TurboBoostGUI(ctk.CTk):
         self.tweak_switches: Dict[str, ctk.CTkSwitch] = {}
         self.app_checkboxes: Dict[str, ctk.CTkCheckBox] = {}
         self.service_status_labels: Dict[str, ctk.CTkLabel] = {}
+        self.snapshot_info_lbl = None
+        self.mode_badge = None
+        self.master_btn = None
         
         self.tray_icon = None
         self.monitoring_active = True
+        self.current_profile_name = "Extreme Game Mode"
 
         # Window setup
         self.title(f"{APP_NAME} {VERSION} — {APP_SUBTITLE}")
@@ -60,8 +64,10 @@ class TurboBoostGUI(ctk.CTk):
         self.create_tabview()
         self.create_footer()
 
+        # Update initial state of button based on snapshot
+        self.refresh_boost_status_ui()
+
         # Load initial active profile into controls
-        self.current_profile_name = "Extreme Game Mode"
         self.apply_profile_to_ui(self.current_profile_name)
 
         # Start live monitoring thread
@@ -132,7 +138,35 @@ class TurboBoostGUI(ctk.CTk):
             padx=14,
             pady=8
         )
-        self.mode_badge.pack(side="left", padx=(10, 0))
+        self.mode_badge.pack(side="left", padx=(10, 6))
+
+        # Admin Status Badge / Button
+        if engine.is_admin():
+            self.admin_badge = ctk.CTkLabel(
+                metrics_box,
+                text="🛡️ ADMIN",
+                font=ctk.CTkFont(size=11, weight="bold"),
+                fg_color="#182A20",
+                text_color="#00E676",
+                corner_radius=8,
+                padx=10,
+                pady=8
+            )
+            self.admin_badge.pack(side="left")
+        else:
+            self.admin_btn = ctk.CTkButton(
+                metrics_box,
+                text="⚠️ Elevate Admin",
+                font=ctk.CTkFont(size=11, weight="bold"),
+                fg_color="#E65100",
+                hover_color="#BF360C",
+                text_color="#FFFFFF",
+                corner_radius=8,
+                width=110,
+                height=32,
+                command=self.on_elevate_click
+            )
+            self.admin_btn.pack(side="left")
 
     # ─── Master 1-Click Action Bar ───────────────────────────────────────────
 
@@ -190,9 +224,6 @@ class TurboBoostGUI(ctk.CTk):
             command=self.on_clean_ram_click
         )
         self.ram_clean_btn.pack(side="right", padx=16, pady=10)
-
-        # Update initial state of button based on snapshot
-        self.refresh_boost_status_ui()
 
     # ─── Tabview (5 Sections) ────────────────────────────────────────────────
 
@@ -804,6 +835,8 @@ class TurboBoostGUI(ctk.CTk):
         self.refresh_snapshot_info_ui()
 
     def refresh_snapshot_info_ui(self):
+        if not hasattr(self, 'snapshot_info_lbl') or self.snapshot_info_lbl is None:
+            return
         snapshot = self.engine.snapshot
         if snapshot.get("is_boosted", False):
             info = (
@@ -834,7 +867,17 @@ class TurboBoostGUI(ctk.CTk):
             "kill_background_apps": apps
         }
 
+    def on_elevate_click(self):
+        self.log("Requesting Administrator elevation...")
+        self.engine.run_as_admin()
+
     def on_master_toggle_click(self):
+        if not engine.is_admin():
+            self.log("⚠️ Administrator privileges required to stop services and change power plans.")
+            # Trigger elevation
+            self.on_elevate_click()
+            return
+
         if self.engine.is_boosted():
             self.on_restore_click()
         else:
